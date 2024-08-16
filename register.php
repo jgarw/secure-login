@@ -12,7 +12,7 @@ require 'script.php';
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Login</title>
+        <title>Register</title>
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
 
@@ -21,7 +21,7 @@ require 'script.php';
         <div class = "container">
             <form action = "" method = "post">
                 <!-- header for login page -->
-                <h1>Login</h1>
+                <h1>Register</h1>
 
                 <!-- create a table to hold form fields -->
                 <table>
@@ -49,8 +49,7 @@ require 'script.php';
                     
                 <!-- create a container to hold buttons -->
                 <div class = "button-container">
-                    <td><input type="submit" value="Login" name="login"></td>
-                    <td><input type="button" value="Register" onclick="window.location.href='register.php';"></td>
+                    <td><input type="submit" value="Register" name="register"></td>
                 </div><!-- end of button container -->
             </form>
         </div> <!-- end of form container -->

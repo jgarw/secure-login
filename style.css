@@ -51,7 +51,19 @@ input[type="password"]:focus {
     outline: none;
 }
 
-input[type="submit"] {
+input[type="submit"]{
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+
+input[type="button"] {
     width: 100%;
     padding: 10px;
     background-color: #007bff;
@@ -87,4 +99,5 @@ input[type="submit"]:hover {
 
 .errors{
     color: red;
+    text-align: center;
 }
