@@ -6,7 +6,6 @@ error_reporting(E_ALL);
 
 session_start(); // Start session to get logged-in user
 
-include 'header.php';
 
 // Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
@@ -51,11 +50,11 @@ function addCourse($connection, $user_id){
         if ($stmt->execute()) {
             $messages = "Successfully added " . $course_code;
             //redirect back to tableInput.pohp to add another class
-            //header("Location: tableInput.php");
+            header("Location: tableInput.php");
             exit();
         } else {
             $messsages = "Error creating class.";
-            //header("Location: tableInput.php");
+            header("Location: tableInput.php");
         }
 
         $stmt->close();
@@ -98,10 +97,9 @@ function generateTable($connection, $user_id){
             $stmt->close();
         
 
+            echo "</table>";
+            echo "</div>";
 }
-echo "</table>";
-echo "<a href='tableInput.php'>Add More Courses</a>";
-echo "</div>";
 
 // check for post request
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

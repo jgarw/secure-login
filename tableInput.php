@@ -65,7 +65,7 @@
                     </tr>
                 </table>
                 <div class="button-container">
-                        <input type="submit" name="addCourse "value="Add Course">
+                        <input type="submit" name="addCourse" value="Add Course">
                         <input type="submit" name="generate" value="Generate Timetable">
                         <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>"> <!-- Hidden field for user ID -->
                 </tr>
