@@ -27,8 +27,8 @@ require 'script.php';
                 <table>
                     <!-- table row for username field -->
                     <tr>
-                        <td>Username:</td>
-                        <td><input type="text" name="username" id="username"></td>
+                        <td>Email:</td>
+                        <td><input type="text" name="email" id="email"></td>
                     </tr>
 
                     <!-- table row for password field -->
