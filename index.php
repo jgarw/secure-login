@@ -19,22 +19,22 @@ require 'script.php';
     <body>
         <!-- create a container to hold all items neatly in the center -->
         <div class = "container">
-            <form action = "" method = "post">
+            <form action="" method="post">
                 <!-- header for login page -->
                 <h1>Login</h1>
 
                 <!-- create a table to hold form fields -->
                 <table>
-                    <!-- table row for username field -->
+                    <!-- table row for email field -->
                     <tr>
-                        <td>Username:</td>
-                        <td><input type="text" name="username" id="username"></td>
+                        <td>Email:</td>
+                        <td><input type="text" name="email" id="email" required></td>
                     </tr>
 
                     <!-- table row for password field -->
                     <tr>
                         <td>Password:</td>
-                        <td><input type="password" name="password" id="password"></td>
+                        <td><input type="password" name="password" id="password" required></td>
                     </tr>
                 </table>
 
