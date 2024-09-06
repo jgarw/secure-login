@@ -101,6 +101,88 @@ function generateTable($connection, $user_id){
             echo "</div>";
 }
 
+//try to create function that creates calendar layout
+function generateCalendar($connection, $user_id){
+
+    // Initialize the timetable array and day/time slots
+    $timetable = [];
+    $weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    $timeslots = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'];
+
+    // Initialize the timetable with empty values for all days and timeslots
+    foreach ($weekdays as $day) {
+        foreach ($timeslots as $time) {
+            $timetable[$day][$time] = ""; // Empty by default
+        }
+    }
+
+    // Prepare the SQL statement
+    $stmt = $connection->prepare("SELECT course_code, course_name, day_of_week, start_time, end_time 
+                                  FROM CLASSES 
+                                  WHERE user_id = ? 
+                                  ORDER BY FIELD(day_of_week, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'), start_time ASC");
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $rs = $stmt->get_result();
+
+    // Populate the timetable with courses
+    while ($row = $rs->fetch_assoc()) {
+        $course_code = htmlspecialchars($row['course_code']);
+        $course_name = htmlspecialchars($row['course_name']);
+        $day_of_week = htmlspecialchars($row['day_of_week']);
+        // Format the time to match '08:00'
+        $start_time = date('H:i', strtotime($row['start_time']));
+        $end_time = date('H:i', strtotime($row['end_time']));
+        $course_info = "$course_code <br> $course_name <br> $start_time - $end_time";
+
+        // Assign the course info to the appropriate day and time if it exists
+        if (isset($timetable[$day_of_week][$start_time])) {
+            $timetable[$day_of_week][$start_time] = $course_info;
+        }
+    }
+
+    // Display the calendar table
+    echo "<link rel='stylesheet' type='text/css' href='style.css'>";
+    echo "<div class='table-container'>";
+    echo "<h2>Your Timetable (Calendar View)</h2>";
+    echo "<table border='1' class='calendar-table'>";
+    echo "<thead><tr><th>Time</th>";
+
+    // Display the days of the week as table headers
+    foreach($weekdays as $day){
+        echo "<th>{$day}</th>";
+    }
+    echo "</tr></thead>";
+    echo "<tbody>";
+
+    // Display the time slots and courses
+    foreach ($timeslots as $time) {
+        echo "<tr>";
+        echo "<td>{$time}</td>"; // Time column
+
+        foreach($weekdays as $day) {
+            echo "<td>";
+            if (!empty($timetable[$day][$time])) {
+                echo $timetable[$day][$time];
+            } else {
+                //if no matching row with day/time, insert blank cell
+                echo ""; 
+            }
+            echo "</td>";
+        }
+
+        echo "</tr>";
+    }
+
+    echo "</tbody>";
+    echo "</table>";
+    echo "<a href='tableInput.php'>Add More Courses</a>";
+    echo "</div>";
+
+    $stmt->close();
+}
+
+
 // check for post request
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // if register button is pressed
@@ -109,7 +191,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     // if login button is pressed
     elseif(isset($_POST['generate'])){
-        generateTable($connection, $user_id);
+        generateCalendar($connection, $user_id);
     }
 }
 
